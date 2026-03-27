@@ -1,0 +1,4 @@
+[
+  { "id": 1, "question": "¿Cómo solicito una consulta?", "answer": "Puedes solicitar una consulta desde la sección Contacto o usando el formulario 'Consulta rápida' en la página principal.", "keywords": "consulta, contacto", "followups": [] },
+  { "id": 2, "question": "¿Dónde está su oficina?", "answer": "Nuestra dirección está en la sección de contacto. También puedes ver la ubicación en el mapa integrado.", "keywords": "dirección, oficina, mapa", "followups": [] }
+]

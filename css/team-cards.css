@@ -1,0 +1,148 @@
+/* Premium team card styles for About page */
+:root{
+  --bg-dark: #071620;
+  --accent-gold: #d4af37;
+  --text: #e9ecef;
+}
+.team-featured{
+  display:flex;
+  flex-wrap:nowrap;
+  gap:28px;
+  justify-content:center;
+  align-items:stretch;
+}
+.team-grid{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:28px;
+  justify-items:center;
+  align-items:start;
+}
+.team-card{
+  /* slightly lighter dark for better contrast */
+  background: linear-gradient(180deg,#071620 0%, #0b2230 100%);
+  color: #e9ecef;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(7,16,24,0.45);
+  margin: 12px;
+  display: flex;
+  flex-direction: column;
+  width: 340px;
+  transition: transform .22s cubic-bezier(.2,.9,.3,1), box-shadow .22s;
+}
+.team-card--featured{
+  border: 1px solid rgba(212,175,55,0.12);
+  width: 720px;
+  flex-direction: row; /* horizontal layout for featured */
+}
+.team-card:hover{ transform: translateY(-8px); box-shadow: 0 20px 50px rgba(7,16,24,0.6); }
+.team-media{ width:100%; height:220px; background:#0b1114; display:flex; align-items:center; justify-content:center; }
+.team-card--featured .team-media{ width:45%; height:auto; min-height:260px; }
+.team-media img{ width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+.team-avatar{ width:100%; height:100%; background-size:cover; background-position:center; }
+.team-body{ padding:22px; display:flex; flex-direction:column; justify-content:center; }
+.team-card--featured .team-body{ width:55%; padding:32px 26px; background: #071620; }
+.team-name{ color:#d4af37; font-size:1.18rem; margin:0 0 8px; font-weight:700; }
+.team-cargo{ color:#c9b07a; font-size:1rem; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em; }
+.team-area{ color:#f4f6f8; font-size:1rem; margin-bottom:10px; opacity:0.98; }
+.team-desc{ color:#d6d6d6; font-size:1rem; margin-bottom:12px; line-height:1.6; max-height:9em; overflow:hidden; }
+.team-meta{ font-size:1rem; color:#c2c7c9; margin-bottom:12px; }
+.team-meta a{ color:#cfcfcf; text-decoration:none; }
+.team-meta a:hover{ color:#d4af37; }
+.team-socials{ display:flex; gap:12px; align-items:center; margin-top:8px; }
+.team-social-link{ display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:10px; background:transparent; color:inherit; text-decoration:none; transition:background .18s, transform .18s, color .18s; border:1px solid rgba(212,175,55,0.08); }
+.team-social-link i{ color:#d4af37; font-size:18px; }
+.team-social-link:hover{ background:#d4af37; color:#071018; transform:translateY(-3px); }
+
+/* Force readable text inside card if other styles interfere */
+.team-card, .team-card *{ color:inherit; }
+.team-card a{ color:inherit; }
+
+@media (max-width: 992px){
+  .team-card{ width: 46%; }
+  .team-card--featured{ width:100%; flex-direction:column; }
+  .team-card--featured .team-media{ width:100%; min-height:220px; }
+  .team-card--featured .team-body{ width:100%; padding:18px; }
+}
+@media (max-width: 600px){
+  .team-card{ width: 100%; }
+  .team-media{ height:180px; }
+}
+
+/* Home page: make three equal cards */
+#home-cards{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+  align-items: start;
+  justify-items: center;
+}
+#home-cards .team-card{
+  width: 100%;
+  max-width: 380px;
+  margin: 0;
+  height: auto;
+  display:flex;
+  flex-direction:column;
+}
+#home-cards .team-card--featured{
+  /* override featured differences for homepage: make same as others */
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+#home-cards .team-card--featured{ flex-direction: column !important; }
+/* ensure media/body take full width when forced to column (avoid 45% leftover from global featured rules) */
+#home-cards .team-card--featured .team-media{ width:100% !important; min-height:220px; }
+#home-cards .team-card--featured .team-body{ width:100% !important; }
+#home-cards .team-media{ height:220px; }
+#home-cards .team-card .team-body{ padding:20px 22px; min-height:170px; }
+#home-cards .team-card .team-img{ width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+#home-cards .team-card .team-socials{ margin-top:12px }
+#home-cards .team-card:hover{ transform:translateY(-6px); box-shadow:0 26px 50px rgba(7,16,24,0.55); }
+
+@media (max-width: 992px){
+  #home-cards{ grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px){
+  #home-cards{ grid-template-columns: 1fr; }
+  #home-cards .team-card{ max-width: 100%; }
+}
+
+/* INDEX-SPECIFIC: styles that only affect cards in the homepage container (#home-cards)
+   Use the class .index-lawyer-card to avoid touching About page styles */
+#home-cards .index-lawyer-card{
+  background: var(--bg-dark);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(3,6,12,0.45);
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  height: 520px; /* fixed equal height (increased for content) */
+}
+#home-cards .index-lawyer-card .team-media{
+  height: 52%; /* image occupies top portion */
+  min-height: 200px;
+}
+#home-cards .index-lawyer-card .team-body{
+  height: 48%;
+  padding:24px 24px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+#home-cards .index-lawyer-card .team-name{ font-size:1.22rem; color:var(--accent-gold); margin-bottom:8px }
+#home-cards .index-lawyer-card .team-desc{ font-size:1rem; color:var(--text); margin-bottom:10px; max-height:12em; overflow:auto }
+#home-cards .index-lawyer-card .team-meta{ font-size:1rem; color:#cfcfcf }
+#home-cards .index-lawyer-card .team-socials{ margin-top:10px }
+
+@media (max-width: 992px){
+  #home-cards{ grid-template-columns: repeat(2,1fr); }
+  #home-cards .index-lawyer-card{ height:520px; }
+}
+@media (max-width: 600px){
+  #home-cards{ grid-template-columns: 1fr; }
+  #home-cards .index-lawyer-card{ height:480px; }
+}

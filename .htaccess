@@ -1,0 +1,16 @@
+# .htaccess to enable site-wide auth auto-prepend
+# This attempts to make PHP auto-prepend the auth check so pages require admin login.
+# Note: `php_value` may be disallowed on some hosts (PHP-FPM). If so, set `auto_prepend_file`
+# in php.ini or your hosting control panel to: `/path/to/your/site/inc/require_admin.php`
+
+<IfModule mod_php.c>
+  # Try to auto-prepend the auth include. Adjust the path if needed to absolute filesystem path.
+  # Disabled auto_prepend_file because many hosts require an absolute filesystem path
+  # or disallow php_value in .htaccess (causes 500). If you need auto-prepend,
+  # set the absolute path here, e.g.:
+  # php_value auto_prepend_file "/home/estudioj/public_html/inc/require_admin.php"
+</IfModule>
+
+# Parse .html files as PHP so static pages can be protected. Remove if undesired.
+# Parse .html files as PHP so static pages can be protected. Remove if undesired.
+# AddHandler application/x-httpd-php .php .html

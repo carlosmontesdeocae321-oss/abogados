@@ -1,0 +1,168 @@
+/* services-cards.css */
+/* Namespaced with sf- to avoid colisiones */
+.sf-services-wrap{padding:56px 32px;}
+.sf-services-grid{
+  display:grid;
+  /* make cards larger and ensure uniform height */
+  grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+  gap:36px;
+  align-items:stretch;
+  grid-auto-rows:1fr;
+}
+
+/* Card */
+.sf-card{
+  background:#ffffff;
+  border-radius:16px;
+  padding:44px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  box-shadow:0 10px 28px rgba(20,30,40,0.08);
+  transition:transform .22s cubic-bezier(.2,.9,.2,1), box-shadow .22s;
+  border:1px solid rgba(18,34,64,0.04);
+  overflow:hidden;
+  height:100%;
+}
+
+/* Hover lift */
+.sf-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 26px 60px rgba(59,42,16,0.14);
+}
+
+/* Icon style: circle + subtle gradient to look elegant */
+.sf-card-icon{
+  width:112px;
+  height:112px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 18px;
+  background:linear-gradient(180deg, #f8e9bf 0%, #e3c46f 100%);
+  transition:transform .22s, box-shadow .22s;
+  flex-shrink:0;
+}
+.sf-card:hover .sf-card-icon{
+  transform:translateY(-4px) scale(1.06);
+  box-shadow:0 10px 28px rgba(183,139,47,0.10);
+}
+.sf-card-icon img, .sf-card-icon i{
+  width:56px;
+  height:56px;
+  object-fit:contain;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#1f2d3d !important;
+}
+
+.sf-card-icon i{
+  width:auto;
+  height:auto;
+  font-size:46px;
+  line-height:1;
+}
+
+/* Meta list inside card (short highlights) */
+.sf-card-meta{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:6px 0 12px 0;
+}
+.sf-card-meta span{
+  background:rgba(183,139,47,0.06);
+  color:#b78b2f;
+  padding:10px 12px;
+  border-radius:6px;
+  font-size:1.06rem;
+  font-weight:700;
+}
+
+/* Title and description */
+.sf-card-title{
+  font-size:1.9rem;
+  margin:0 0 14px 0;
+  color:#2b2b2b;
+  font-weight:700;
+}
+.sf-card-desc{
+  margin:0;
+  color:#405164;
+  font-size:1.25rem;
+  line-height:1.7;
+  margin-bottom:22px;
+  /* clamp to 2 lines */
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* CTA button */
+.sf-card-cta{
+  margin-top:auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:18px 24px;
+  border-radius:12px;
+  background:#b78b2f;
+  color:#ffffff;
+  text-decoration:none;
+  font-weight:800;
+  font-size:1.2rem;
+  border:none;
+  transition:transform .18s, background .12s, box-shadow .12s;
+  box-shadow:0 10px 22px rgba(183,139,47,0.12);
+}
+.sf-card-cta:hover,
+.sf-card-cta:focus{
+  background:#a06f1f;
+  transform:translateY(-2px);
+  outline:none;
+}
+
+/* Alternative lighter CTA (if you prefer) */
+.sf-card-cta.secondary{
+  background:#f7fbff;
+  color:#0f497a;
+  border:1px solid #e6eef8;
+  box-shadow:none;
+}
+
+/* Responsive tweaks */
+.sf-services-wrap{padding:28px 20px;}
+@media (max-width:1100px){
+  .sf-services-wrap{padding:28px 20px;}
+  .sf-card{padding:22px}
+  .sf-card-icon{width:72px;height:72px}
+  .sf-card-icon img, .sf-card-icon i{width:38px;height:38px}
+  .sf-card-icon i{font-size:34px;}
+  .sf-card-title{ font-size:1.45rem; }
+  .sf-card-desc{ font-size:1.08rem; line-height:1.45; }
+  .sf-card-cta{ font-size:1.08rem; padding:12px 16px; }
+}
+
+@media (max-width:700px){
+  .sf-services-wrap{padding:18px 12px;}
+  .sf-card{padding:16px}
+  .sf-card-icon{width:56px;height:56px}
+  .sf-card-icon img, .sf-card-icon i{width:30px;height:30px}
+  .sf-card-icon i{font-size:28px;}
+  .sf-card-title{ font-size:1.25rem; }
+  .sf-card-desc{ font-size:1.05rem; line-height:1.4; }
+  .sf-card-meta span{ font-size:1rem; padding:8px 10px; }
+  .sf-card-cta{ font-size:1.05rem; padding:10px 14px; }
+}
+
+/* Accessibility: focus state */
+.sf-card:focus-within{ box-shadow:0 20px 45px rgba(12,28,56,0.14); transform:translateY(-6px); }
+
+/* Optional subtle entrance animation when cards appear (useful if you lazy-load) */
+.sf-card{opacity:0; transform:translateY(6px); animation:sf-card-in .42s ease forwards;}
+@keyframes sf-card-in{ to{ opacity:1; transform:translateY(0);} }

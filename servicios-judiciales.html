@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Servicios Judiciales y Públicos — Alfonso Jimenez & Asociados</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Poppins:300,400,500" rel="stylesheet">
+<link rel="stylesheet" href="css/bootstrap.css?v=20260312">
+<link rel="stylesheet" href="css/style.css?v=20260312">
+
+<link rel="shortcut icon" href="images/ISOTIPO.jpg">
+
+<style>
+
+/* HERO */
+.case-hero{
+background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),url(images/contacto.png);
+background-size:cover;
+background-position:center;
+padding:110px 0;
+text-align:center;
+}
+
+.hero-title{
+font-family:'Playfair Display',serif;
+color:#d4af37;
+font-size:46px;
+letter-spacing:.5px;
+}
+
+.hero-sub{
+color:#e6d5a3;
+font-size:18px;
+max-width:720px;
+margin:auto;
+line-height:1.6;
+}
+
+/* SECCION */
+.section-bg{
+background:#f4f6f9;
+padding:80px 0;
+}
+
+/* CARDS */
+.access-card{
+background:#fff;
+padding:35px 25px;
+border-radius:10px;
+text-align:center;
+transition:all .3s ease;
+box-shadow:0 6px 18px rgba(0,0,0,.08);
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.access-card:hover{
+transform:translateY(-6px);
+box-shadow:0 12px 28px rgba(0,0,0,.12);
+}
+
+.access-card img{
+max-width:70px;
+margin-bottom:18px;
+opacity:.9;
+transition:.3s;
+}
+
+.access-card:hover img{
+transform:scale(1.05);
+opacity:1;
+}
+
+.access-card h4{
+font-family:'Playfair Display',serif;
+font-size:18px;
+color:#222;
+margin-top:10px;
+}
+
+.access-card p{
+font-size:13px;
+color:#777;
+margin-top:8px;
+}
+
+/* LOGO OSCURO */
+.logo-dark-bg{
+background:#1c1c1c;
+padding:15px;
+border-radius:8px;
+display:inline-block;
+margin-bottom:15px;
+}
+
+.logo-dark-bg img{
+max-width:60px;
+filter:brightness(1.2);
+}
+
+/* ESPACIADO */
+.col-md-3{
+margin-bottom:30px;
+}
+
+/* LINKS */
+a{
+text-decoration:none !important;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="colorlib-nav" role="navigation">
+		<div class="top-menu">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-2">
+						<div id="colorlib-logo"><a href="index.php">
+							<picture>
+								<source media="(max-width: 768px)" srcset="images/ISOTIPO.jpg">
+								<img src="images/logo.png" alt="Bufete logo" style="max-width:100%;height:auto;display:block;">
+							</picture>
+						</a></div>
+					</div>
+					<div class="col-md-10 text-right menu-1">
+						<ul>
+							<li class="active"><a href="index.php">Inicio</a></li>
+							<li><a href="practice.php">Servicios</a></li>
+							<li><a href="servicios-judiciales.html">Consulta judiciales</a></li>
+							<li><a href="educacion-continua.html">Educacion Continua</a></li>
+							<li><a href="about.php">Acerca de Nosotros</a></li>
+							<li><a href="contact.php">Contacto</a></li>
+							<li class="btn-cta"><a href="#"><span>Solicitar cita</span></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+<!-- HERO -->
+<section class="case-hero">
+
+						<!-- Lightweight fallback click handler: ensures chat opens even if main.js didn't initialize -->
+						<script>
+							(function(){
+								try{
+									var toggles = document.querySelectorAll('.chat-toggle');
+									toggles.forEach(function(t){
+										t.addEventListener('click', function(e){
+											try{ e.preventDefault(); }catch(_){}
+											var w = document.getElementById('chatWidget');
+											if(!w) return;
+											w.classList.toggle('open');
+											w.setAttribute('aria-hidden', !w.classList.contains('open'));
+										}, {passive:false});
+									});
+									console.log('CHAT FALLBACK: handler attached');
+								}catch(e){ console.warn('CHAT FALLBACK error', e); }
+							})();
+						</script>
+<div class="container">
+<h1 class="hero-title">Consulta tus Procesos Judiciales</h1>
+<p class="hero-sub">
+Accede a enlaces oficiales del sistema judicial ecuatoriano: consultas de procesos, certificados y servicios institucionales.
+</p>
+</div>
+</section>
+
+<!-- ACCESOS -->
+<section class="section-bg">
+<div class="container">
+
+<h2 style="text-align:center; font-family:'Playfair Display',serif; margin-bottom:50px;">
+Accesos directos
+</h2>
+
+<div class="row">
+
+<!-- PROCESOS -->
+<div class="col-md-3 col-sm-6">
+<a href="https://procesosjudiciales.funcionjudicial.gob.ec/busqueda-filtros" target="_blank">
+<div class="access-card">
+
+<div class="logo-dark-bg">
+<img src="images/consultaproceso.png">
+</div>
+
+<h4>Consulta de procesos</h4>
+<p>Verifica causas judiciales en el sistema oficial.</p>
+
+</div>
+</a>
+</div>
+<!-- DENUNCIAS -->
+<div class="col-md-3 col-sm-6">
+<a href="https://www.gestiondefiscalias.gob.ec/siaf/informacion/web/noticiasdelito/index.php" target="_blank">
+<div class="access-card">
+
+<img src="images/moduloinformacion.png">
+
+<h4>Noticias del delito</h4>
+<p>Consulta reportes y registros de denuncias.</p>
+
+</div>
+</a>
+</div>
+
+<!-- SUPA -->
+<div class="col-md-3 col-sm-6">
+<a href="https://www.funcionjudicial.gob.ec/supa/" target="_blank">
+<div class="access-card">
+
+<img src="images/ministeriodelinterior.png">
+
+<h4>Pensiones alimenticias</h4>
+<p>Accede al sistema SUPA de la Función Judicial.</p>
+
+</div>
+</a>
+</div>
+
+<!-- ANTECEDENTES -->
+<div class="col-md-3 col-sm-6">
+<a href="https://certificados.ministeriodelinterior.gob.ec/gestorcertificados/antecedentes/" target="_blank">
+<div class="access-card">
+
+<img src="images/ministeriodelinteriorantecedentespenal.png">
+
+<h4>Antecedentes penales</h4>
+<p>Obtén tu certificado oficial en línea.</p>
+
+</div>
+</a>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<!-- FOOTER -->
+<div id="site-footer" class="include-footer"></div>
+
+<!-- CHAT -->
+<div class="gototop js-top">
+	<a href="#" class="chat-toggle" aria-label="Abrir chat"><img src="images/BOTCHAT.png" alt="Chatbot" class="chat-toggle-img"></a>
+</div>
+<div id="chatWidget" class="chat-widget" aria-hidden="true">
+	<div class="chat-header">
+		<div class="chat-header-left">
+			<img src="images/BOTCHAT.png" alt="Alfonsito" class="chat-avatar">
+			<div class="chat-title">Alfonsito <small class="chat-sub">Asistente virtual</small></div>
+		</div>
+		<button class="chat-close" aria-label="Cerrar chat">×</button>
+	</div>
+	<div class="chat-body">El chat se mostrará aquí cuando esté listo.</div>
+	<div class="chat-footer">
+		<input type="text" class="chat-input" placeholder="Escribe tu mensaje..." aria-label="Mensaje">
+		<button type="button" class="chat-send" aria-label="Enviar">Enviar</button>
+	</div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="js/jquery.min.js?v=20260312"></script>
+<!-- jQuery Easing -->
+<script src="js/jquery.easing.1.3.js?v=20260312"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js?v=20260312"></script>
+<!-- Waypoints -->
+<script src="js/jquery.waypoints.min.js?v=20260312"></script>
+<!-- Stellar Parallax -->
+<script src="js/jquery.stellar.min.js?v=20260312"></script>
+<!-- Carousel -->
+<script src="js/owl.carousel.min.js?v=20260312"></script>
+<!-- Flexslider -->
+<script src="js/jquery.flexslider-min.js?v=20260312"></script>
+<!-- countTo -->
+<script src="js/jquery.countTo.js?v=20260312"></script>
+<!-- Magnific Popup -->
+<script src="js/jquery.magnific-popup.min.js?v=20260312"></script>
+<script src="js/magnific-popup-options.js?v=20260312"></script>
+<!-- i18n language switcher -->
+<script src="js/i18n.js?v=20260312"></script>
+<!-- Main -->
+<script src="js/main.js?v=20260312"></script>
+<script src="js/navbar-load.js?v=20260319"></script>
+<script src="js/footer-load.js?v=20260319"></script>
+
+</body>
+</html>
