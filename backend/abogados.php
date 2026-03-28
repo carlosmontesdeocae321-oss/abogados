@@ -289,7 +289,8 @@ if($action === 'save'){
     $twitter = isset($_POST['twitter']) ? trim($_POST['twitter']) : null;
     $whatsapp = isset($_POST['whatsapp']) ? trim($_POST['whatsapp']) : null;
     $cargo = isset($_POST['cargo']) ? trim($_POST['cargo']) : null;
-    $destacado = isset($_POST['destacado']) ? 1 : 0;
+    $destacado = isset($_POST['destacado']) ? (int)$_POST['destacado'] : 0;
+    if(!in_array($destacado, [0,1,2], true)) $destacado = 0;
     $formacion = isset($_POST['formacion']) ? trim($_POST['formacion']) : null;
     $experiencia = isset($_POST['experiencia']) ? trim($_POST['experiencia']) : null;
     $docencia = isset($_POST['docencia']) ? trim($_POST['docencia']) : null;

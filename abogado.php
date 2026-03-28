@@ -526,7 +526,7 @@ Contactar
 
 </section>
 
-<script src="/js/navbar-load.js?v=20260319"></script>
+<script src="js/navbar-load.js?v=20260319"></script>
 <?php include __DIR__ . '/footer.php'; ?>
 
 </body>

@@ -107,7 +107,11 @@ $abogados = $pdo->query('SELECT id,nombre,correo,celular,foto,foto_carnet,foto_f
                 <div style="display:flex;gap:12px;flex-wrap:wrap">
                   <div style="min-width:220px"><strong>Correo:</strong> <div><?= $a['correo'] ? '<a href="mailto:'.htmlspecialchars($a['correo']).'">'.htmlspecialchars($a['correo']).'</a>' : '<em style="color:#999">(vacío)</em>' ?></div></div>
                   <div style="min-width:160px"><strong>Celular:</strong> <div><?= $a['celular'] ? htmlspecialchars($a['celular']) : '<em style="color:#999">(vacío)</em>' ?></div></div>
-                  <div style="min-width:120px"><strong>Destacado:</strong> <div><?= !empty($a['destacado']) ? 'Sí' : 'No' ?></div></div>
+                  <div style="min-width:120px"><strong>Destacado:</strong> <div><?php
+                    if((int)$a['destacado'] === 2) echo 'Segundo socio fundador';
+                    else if((int)$a['destacado'] === 1) echo 'Destacado';
+                    else echo 'No';
+                  ?></div></div>
                 </div>
                 <div style="margin-top:8px"><strong>Descripción:</strong>
                   <div style="margin-top:6px;color:#333;"><?= $a['descripcion'] ? nl2br(htmlspecialchars($a['descripcion'])) : '<em style="color:#999">(vacío)</em>' ?></div>
@@ -166,6 +170,14 @@ $abogados = $pdo->query('SELECT id,nombre,correo,celular,foto,foto_carnet,foto_f
     <div class="form-row">
       <div class="form-group col"><label>Cargo</label><input name="cargo" id="panel_ab_cargo" class="form-control"></div>
       <div class="form-group col"><label>Área de práctica</label><input name="area_practica" id="panel_ab_area" class="form-control"></div>
+    </div>
+    <div class="form-group">
+      <label>Rol destacado</label>
+      <select name="destacado" id="panel_ab_destacado" class="form-control">
+        <option value="0">Sin destacado</option>
+        <option value="1">Destacado (home/cards principales)</option>
+        <option value="2">Segundo socio fundador (About)</option>
+      </select>
     </div>
     <div class="form-group"><label>Descripción profesional</label><textarea name="descripcion" id="panel_ab_descripcion" class="form-control" rows="4"></textarea></div>
     <div class="form-row">
@@ -312,6 +324,7 @@ $(function(){
         $('#panel_ab_twitter').val(d.twitter || '');
         $('#panel_ab_whatsapp').val(d.whatsapp || '');
         $('#panel_ab_cargo').val(d.cargo || '');
+        $('#panel_ab_destacado').val((typeof d.destacado !== 'undefined' && d.destacado !== null) ? String(d.destacado) : '0');
         $('#panel_ab_formacion').val(d.formacion || '');
         $('#panel_ab_experiencia').val(d.experiencia || '');
         $('#panel_ab_docencia').val(d.docencia || '');

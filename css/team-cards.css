@@ -146,3 +146,40 @@
   #home-cards{ grid-template-columns: 1fr; }
   #home-cards .index-lawyer-card{ height:480px; }
 }
+
+@media (max-width: 767px){
+  #home-cards{
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  #home-cards .index-lawyer-card{
+    height: auto;
+    min-height: 0;
+  }
+
+  #home-cards .index-lawyer-card .team-media{
+    height: auto;
+    min-height: 220px;
+  }
+
+  #home-cards .index-lawyer-card .team-body{
+    height: auto;
+    padding: 16px;
+  }
+
+  #home-cards .index-lawyer-card .team-desc{
+    max-height: none;
+    overflow: visible;
+  }
+
+  #home-team .team-prev-home,
+  #home-team .team-next-home{
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin: 10px 6px 0 !important;
+  }
+}

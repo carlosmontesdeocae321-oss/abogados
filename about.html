@@ -170,12 +170,80 @@
 	padding:24px;
 	display:flex;
 	flex-direction:column;
-	justify-content:space-between;
+	justify-content:flex-start;
+	overflow-y:auto;
 }
 #team-grid .index-lawyer-card .team-name{ font-size:1.22rem; color:#d4af37; margin:0 0 8px; }
 #team-grid .index-lawyer-card .team-cargo{ color:#c9b07a; font-size:.9rem; margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; }
 #team-grid .index-lawyer-card .team-area{ color:#f4f6f8; font-size:.95rem; margin-bottom:8px; }
 #team-grid .index-lawyer-card .team-desc{ font-size:.95rem; color:#e9ecef; margin-bottom:8px; line-height:1.55; max-height:4.7em; overflow:hidden; }
+#team-grid .index-lawyer-card .team-desc-list{
+	list-style:none;
+	padding:0;
+	margin:0 0 10px;
+	display:flex;
+	flex-direction:column;
+	gap:7px;
+}
+#team-grid .index-lawyer-card .team-desc-list li{
+	position:relative;
+	padding-left:12px;
+	font-size:.92rem;
+	line-height:1.45;
+	color:#e9ecef;
+}
+#team-grid .index-lawyer-card .team-desc-list li::before{
+	content:'';
+	position:absolute;
+	left:0;
+	top:.58em;
+	width:5px;
+	height:5px;
+	border-radius:50%;
+	background:#d4af37;
+}
+#team-grid .index-lawyer-card .team-data-block{
+	margin:0 0 8px;
+	padding:8px 10px;
+	border:1px solid rgba(212,175,55,.16);
+	border-radius:8px;
+	background:rgba(255,255,255,.02);
+}
+#team-grid .index-lawyer-card .team-data-title{
+	font-size:.72rem;
+	font-weight:700;
+	letter-spacing:.08em;
+	text-transform:uppercase;
+	color:#c9b07a;
+	margin:0 0 6px;
+}
+#team-grid .index-lawyer-card .team-data-block .team-desc-list{
+	margin:0;
+	gap:5px;
+}
+#team-grid .index-lawyer-card .team-data-block .team-desc-list li{
+	font-size:.88rem;
+	line-height:1.35;
+}
+
+.team-profile-formacion .team-data-block{
+	margin:0 0 10px;
+	padding:10px 12px;
+	border:1px solid rgba(212,175,55,0.2);
+	border-radius:8px;
+	background:rgba(255,255,255,0.02);
+}
+.team-profile-formacion .team-data-title{
+	font-size:.78rem;
+	font-weight:700;
+	letter-spacing:.08em;
+	text-transform:uppercase;
+	color:#d4af37;
+	margin:0 0 8px;
+}
+.team-profile-formacion .team-desc-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px; }
+.team-profile-formacion .team-desc-list li{ position:relative; padding-left:12px; line-height:1.45; font-size:.92rem; color:#d9d9d9; }
+.team-profile-formacion .team-desc-list li::before{ content:''; position:absolute; left:0; top:.58em; width:5px; height:5px; border-radius:50%; background:#d4af37; }
 #team-grid .index-lawyer-card .team-meta{ font-size:.9rem; color:#cfcfcf; margin-bottom:10px; }
 #team-grid .index-lawyer-card .team-meta a{ color:#cfcfcf; text-decoration:none; }
 #team-grid .index-lawyer-card .team-meta a:hover{ color:#d4af37; }
@@ -712,7 +780,8 @@ height:340px;
 						<h4>Información de contacto</h4>
 					<ul class="colorlib-footer-links">
 						<li>Torres de la Merced, Víctor Manuel Rendón, Guayaquil, Ecuador</li>
-						<li><a href="tel:+59399887766">+593 99 887 766</a></li>
+						<li><a href="tel:+59394047759">Línea de atención: +593 94 047 759</a></li>
+						<li><a href="tel:2569933">Teléfono convencional: 2-569933</a></li>
 						<li><a href="mailto:Abogados@estudiojimenezyasociados.com">Abogados@estudiojimenezyasociados.com</a></li>
 					</ul>
 					</div>
@@ -720,7 +789,7 @@ height:340px;
 				<div class="col-md-3 col-md-push-1">
 						<h4>Horario de atención</h4>
 					<ul class="colorlib-footer-links">
-						<li>Lunes a Viernes: 09:00 - 18:00</li>
+						<li>Lunes a Viernes: 09:00 - 17:00</li>
 
 					</ul>
 					</div>
@@ -805,6 +874,47 @@ height:340px;
 
 	  function esc(s){ return $('<div>').text(s||'').html(); }
 
+	  function splitFieldItems(raw){
+		var text = (raw || '').toString();
+		if(!text.trim()) return [];
+		return text
+		  .split(/\r?\n|;|\|/)
+		  .map(function(item){ return item.replace(/^[-*\u2022\s]+/, '').trim(); })
+		  .filter(function(item){ return item.length > 0; });
+	  }
+
+	  function buildFieldBlocks(a, isFounder, onlyKeys){
+		var fields = [
+		  { key: 'formacion', label: 'Formacion' },
+		  { key: 'experiencia', label: 'Experiencia' },
+		  { key: 'docencia', label: 'Docencia' },
+		  { key: 'publicaciones', label: 'Publicaciones' },
+		  { key: 'distinciones', label: 'Distinciones' },
+		  { key: 'descripcion', label: 'Perfil profesional' }
+		];
+
+		if(Array.isArray(onlyKeys) && onlyKeys.length){
+		  fields = fields.filter(function(f){ return onlyKeys.indexOf(f.key) !== -1; });
+		}
+
+		var html = '';
+		fields.forEach(function(f){
+		  var items = splitFieldItems(field(a, f.key) || '');
+		  if(!items.length) return;
+
+		  // keep cards compact while allowing larger detail for founder block
+		  var limited = isFounder ? items : items.slice(0, 3);
+		  html += '<div class="team-data-block">';
+		  html += '<div class="team-data-title">'+esc(f.label)+'</div>';
+		  html += '<ul class="team-desc-list">';
+		  limited.forEach(function(item){ html += '<li>'+esc(item)+'</li>'; });
+		  html += '</ul>';
+		  html += '</div>';
+		});
+
+		return html;
+	  }
+
 	  function normalizeUrl(value){
 		var v = (value || '').toString().trim();
 		if(!v) return '';
@@ -827,8 +937,6 @@ height:340px;
 		var nombre = esc(field(a,'nombre')) || '—';
 		var cargo = esc(field(a,'cargo')) || 'Socio Fundador';
 		var area = esc(field(a,'area_practica')) || '';
-		var desc = esc(field(a,'descripcion')) || '';
-		var formacion = field(a,'formacion') || ''; // Nueva: estudios/formación
 		var correo = esc(field(a,'correo')) || '';
 		var celular = esc(field(a,'celular')) || '';
 		var facebook = normalizeUrl(field(a,'facebook'));
@@ -849,17 +957,7 @@ height:340px;
 		html += '<div class="team-profile-name">'+nombre+'</div>';
 		html += '<div class="team-profile-cargo">'+cargo+'</div>';
 		if(area) html += '<div class="team-profile-area">'+area+'</div>';
-		// Ocultar descripción original, mostrar solo formación
-		if(desc) html += '<div class="team-profile-desc" style="display:none;">'+desc+'</div>';
-		// Nueva sección: Formación/Estudios
-		if(formacion) {
-			html += '<div class="team-profile-formacion">';
-			formacion.split('\n').forEach(function(linea){
-				linea = esc(linea.trim());
-				if(linea) html += '<div class="formacion-item">'+linea+'</div>';
-			});
-			html += '</div>';
-		}
+		html += '<div class="team-profile-formacion">'+buildFieldBlocks(a, true)+'</div>';
 		if(correo || celular){
 		  html += '<div class="team-profile-meta">';
 		  if(correo) html += '<a href="mailto:'+correo+'">'+correo+'</a>';
@@ -890,7 +988,6 @@ height:340px;
 		var nombre = esc(field(a,'nombre')) || '—';
 		var cargo = esc(field(a,'cargo')) || '';
 		var area = esc(field(a,'area_practica')) || '';
-		var desc = esc(field(a,'descripcion')) || '';
 		var correo = esc(field(a,'correo')) || '';
 		var celular = esc(field(a,'celular')) || '';
 		var facebook = normalizeUrl(field(a,'facebook'));
@@ -898,9 +995,6 @@ height:340px;
 		var linkedin = normalizeUrl(field(a,'linkedin'));
 		var twitter = normalizeUrl(field(a,'twitter'));
 		var whatsapp = normalizeWhatsApp(field(a,'whatsapp'));
-
-		var shortDesc = desc || '';
-		if(shortDesc.length > 170){ shortDesc = shortDesc.substr(0,170).replace(/\s+\S*$/,'') + '...'; }
 
 		var html = '<article class="team-card index-lawyer-card" data-id="'+id+'">';
 		html += '<div class="team-media">';
@@ -912,7 +1006,7 @@ height:340px;
 		html += '<h3 class="team-name">'+nombre+'</h3>';
 		if(cargo) html += '<div class="team-cargo">'+cargo+'</div>';
 		if(area) html += '<div class="team-area">'+area+'</div>';
-		if(shortDesc) html += '<p class="team-desc">'+shortDesc+'</p>';
+		html += buildFieldBlocks(a, false, ['descripcion']);
 
 		var meta = [];
 		if(correo) meta.push('<a href="mailto:'+correo+'">'+correo+'</a>');
@@ -968,13 +1062,27 @@ height:340px;
 			return;
 		  }
 
-// The first item is the Socio Fundador (featured). Search for Alfonso specifically
-					var founder = resp.data.find(function(a){ return a.nombre && a.nombre.toLowerCase().includes('alfonso'); });
-					if(!founder && resp.data.length > 0) founder = resp.data[0]; // fallback to first if Alfonso not found
-					
-					var rest = resp.data.filter(function(a){ return a !== founder; }); // Exclude founder from grid
+					// Socios fundadores: principal (Alfonso/cargo) + secundario (destacado=2 desde dashboard)
+					var primaryFounder = resp.data.find(function(a){
+						var name = (a.nombre || '').toLowerCase();
+						var cargo = (a.cargo || '').toLowerCase();
+						return name.indexOf('alfonso') !== -1 || cargo.indexOf('socio fundador') !== -1;
+					});
+					if(!primaryFounder && resp.data.length > 0) primaryFounder = resp.data[0];
 
-					if(founder) $featured.html(buildFeatured(founder));
+					var secondFounder = resp.data.find(function(a){
+						return a !== primaryFounder && parseInt(a.destacado, 10) === 2;
+					});
+
+					var founders = [primaryFounder, secondFounder].filter(function(a, idx, arr){
+						return a && arr.indexOf(a) === idx;
+					});
+
+					var rest = resp.data.filter(function(a){ return founders.indexOf(a) === -1; });
+
+					if(founders.length){
+						$featured.html(founders.map(function(f){ return buildFeatured(f); }).join(''));
+					}
 
 					// Render grid with only the other lawyers (not the founder)
 					var allHtml = rest.map(function(a){ return buildGridCard(a); });

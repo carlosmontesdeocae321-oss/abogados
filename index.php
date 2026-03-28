@@ -118,7 +118,7 @@
 	}
 
 	/* Hero video wrapper styles */
-	.hero-video-wrap{ position:absolute; inset:0; z-index:0; overflow:hidden; }
+	.hero-video-wrap{ position:absolute; inset:0; z-index:0; overflow:hidden; background:url('images/img_bg_1.jpg') center center / cover no-repeat; }
 	.hero-video-wrap video{ width:100%; height:100%; object-fit:cover; display:block; }
 	/* soft dark overlay for better text contrast */
 	#colorlib-hero .overlay-gradient{ position:absolute; inset:0; z-index:1; background:linear-gradient(180deg, rgba(6,12,28,0.32), rgba(6,12,28,0.44)); }
@@ -184,7 +184,7 @@
 	<aside id="colorlib-hero" class="js-fullheight">
 		<div class="hero-static js-fullheight" style="position:relative;">
 			<div class="hero-video-wrap" aria-hidden="true">
-				<video id="hero-bg-video" autoplay muted loop playsinline preload="auto">
+				<video id="hero-bg-video" autoplay muted loop playsinline preload="auto" poster="images/img_bg_1.jpg">
 					<source src="uploads/videos/oficina1.mp4" type="video/mp4">
 				</video>
 			</div>
@@ -673,7 +673,38 @@ con ética, transparencia y responsabilidad.
 	<script src="js/leaflet_map.js?v=20260312"></script>
 	<script src="js/i18n.js?v=20260312"></script>
 	<script src="js/main.js?v=20260312"></script>
-	<script src="/js/footer-load.js?v=20260319"></script>
+	<script src="js/footer-load.js?v=20260319"></script>
+	<script>
+	(function(){
+	  function hideLoader(){
+	    var loader = document.querySelector('.colorlib-loader');
+	    if(loader){ loader.style.display = 'none'; }
+	  }
+	  window.addEventListener('load', hideLoader);
+	  setTimeout(hideLoader, 3500);
+
+	  var video = document.getElementById('hero-bg-video');
+	  if(!video) return;
+
+	  function tryPlay(){
+	    var p = video.play();
+	    if(p && typeof p.catch === 'function'){
+	      p.catch(function(){
+	        // Keep poster/fallback background when autoplay is blocked.
+	      });
+	    }
+	  }
+
+	  video.muted = true;
+	  video.setAttribute('muted', 'muted');
+	  video.setAttribute('playsinline', 'playsinline');
+	  video.addEventListener('canplay', tryPlay);
+	  document.addEventListener('visibilitychange', function(){
+	    if(!document.hidden) tryPlay();
+	  });
+	  tryPlay();
+	})();
+	</script>
 	<script>
 	(function(){
 	  var items = document.querySelectorAll('[data-counter-target]');
