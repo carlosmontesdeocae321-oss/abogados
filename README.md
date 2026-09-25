@@ -22,9 +22,18 @@ Sitio web corporativo para firma legal, con frontend publico, chatbot, formulari
 - `css/`, `js/`, `images/`, `fonts/` recursos estaticos
 - `uploads/` archivos subidos
 
+### Nueva arquitectura (migración incremental en curso)
+
+El proyecto se está migrando por fases a una arquitectura en capas (`app/`, `config/`,
+`bootstrap/`, `routes/`, `templates/`, `database/`, `storage/`). Durante la migración **conviven**
+el código legacy (carpetas y archivos listados arriba, que siguen atendiendo todas las URLs) y la
+nueva arquitectura. Todo código nuevo se escribe en la nueva arquitectura.
+Detalles y reglas: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
 ## Requisitos
 
-- PHP 8.0+
+- PHP 8.1+ (extensiones `pdo_mysql` y `json`)
+- Composer 2 (autoload PSR-4 `App\` → `app/`)
 - MySQL 5.7+ o MariaDB equivalente
 - Node.js 18+ (opcional, para scripts auxiliares)
 
@@ -44,18 +53,24 @@ mysql -u root -p < db/schema.sql
 mysql -u root -p < db/seed_abogados_full.sql
 ```
 
-5. Configurar credenciales de base de datos en:
+5. Configurar las credenciales **solo** mediante variables de entorno: copiar `.env.example` a
+   `.env` y completar los valores. No escribir credenciales en `db.php` ni en `backend/db.php`.
+   La nueva arquitectura lee `DB_*`; el código legacy todavía lee `MYSQL_*`.
 
-- `db.php`
-- `backend/db.php`
+6. Instalar el autoload de Composer y verificar la base de la nueva arquitectura (no toca la BD):
 
-6. Levantar servidor PHP en la raiz del proyecto:
+```bash
+composer install
+composer smoke
+```
+
+7. Levantar servidor PHP en la raiz del proyecto:
 
 ```bash
 php -S localhost:8000
 ```
 
-7. Abrir en navegador:
+8. Abrir en navegador:
 
 - `http://localhost:8000/index.php`
 

@@ -14,9 +14,18 @@ if (file_exists($envFile)) {
 
 // Database connection using PDO. Configure via environment variables or .env.
 $DB_HOST = getenv('MYSQL_HOST') !== false ? getenv('MYSQL_HOST') : 'localhost';
-$DB_NAME = getenv('MYSQL_DATABASE') !== false ? getenv('MYSQL_DATABASE') : 'estudioj_lawfirm';
-$DB_USER = getenv('MYSQL_USER') !== false ? getenv('MYSQL_USER') : 'estudioj_firmauser';
-$DB_PASS = getenv('MYSQL_PASSWORD') !== false ? getenv('MYSQL_PASSWORD') : '';
+// No hardcoded fallbacks: MYSQL_DATABASE, MYSQL_USER and MYSQL_PASSWORD must be defined.
+$DB_NAME = getenv('MYSQL_DATABASE');
+$DB_USER = getenv('MYSQL_USER');
+$DB_PASS = getenv('MYSQL_PASSWORD');
+
+if ($DB_NAME === false || $DB_USER === false || $DB_PASS === false) {
+    @file_put_contents(__DIR__ . '/php_server_log.txt', date('[Y-m-d H:i:s] ') . "root db.php connection error: credentials not configured (MYSQL_DATABASE / MYSQL_USER / MYSQL_PASSWORD)\n", FILE_APPEND);
+    http_response_code(500);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['error' => 'DB connection error']);
+    exit;
+}
 
 try {
     $dsn = "mysql:host={$DB_HOST};dbname={$DB_NAME};charset=utf8mb4";

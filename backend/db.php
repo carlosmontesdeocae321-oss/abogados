@@ -15,10 +15,12 @@ if (file_exists($envFile)) {
     }
 }
 
+// Credentials come ONLY from the environment / .env. No hardcoded fallbacks: if any of
+// MYSQL_DATABASE, MYSQL_USER or MYSQL_PASSWORD is missing, getPDO() fails cleanly.
 $DB_HOST = getenv('MYSQL_HOST') !== false ? getenv('MYSQL_HOST') : 'localhost';
-$DB_NAME = getenv('MYSQL_DATABASE') !== false ? getenv('MYSQL_DATABASE') : 'estudioj_lawfirm';
-$DB_USER = getenv('MYSQL_USER') !== false ? getenv('MYSQL_USER') : 'estudioj_firmauser';
-$DB_PASS = getenv('MYSQL_PASSWORD') !== false ? getenv('MYSQL_PASSWORD') : '1236780Ivar.@';
+$DB_NAME = getenv('MYSQL_DATABASE');
+$DB_USER = getenv('MYSQL_USER');
+$DB_PASS = getenv('MYSQL_PASSWORD');
 
 define('UPLOADS_PATH', __DIR__ . '/../uploads');
 
@@ -26,6 +28,13 @@ function getPDO(){
     static $pdo = null;
     if ($pdo) return $pdo;
     global $DB_HOST, $DB_NAME, $DB_USER, $DB_PASS;
+    if ($DB_NAME === false || $DB_USER === false || $DB_PASS === false) {
+        $msg = date('[Y-m-d H:i:s] ') . "DB connection failed: credentials not configured (MYSQL_DATABASE / MYSQL_USER / MYSQL_PASSWORD)\n";
+        @file_put_contents(dirname(__DIR__) . '/php_server_log.txt', $msg, FILE_APPEND);
+        http_response_code(500);
+        echo json_encode(['error' => 'DB connection failed']);
+        exit;
+    }
     $dsn = "mysql:host={$DB_HOST};dbname={$DB_NAME};charset=utf8mb4";
     $opts = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

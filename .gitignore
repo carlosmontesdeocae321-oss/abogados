@@ -1,0 +1,19 @@
+# Composer dependencies (regenerate with: composer install / composer dump-autoload)
+/vendor/
+
+# Local environment and secrets. .env was untracked in the Foundation commit, but it still
+# exists in older commits: the credential must be rotated (see docs/ARCHITECTURE.md §8).
+/.env
+/.env.*
+!/.env.example
+
+# Runtime files of the new architecture (storage/logs and storage/temp keep their own .gitignore)
+/storage/logs/*
+/storage/temp/*
+!/storage/logs/.gitignore
+!/storage/temp/.gitignore
+
+# Tooling / OS
+.phpunit.result.cache
+.DS_Store
+Thumbs.db

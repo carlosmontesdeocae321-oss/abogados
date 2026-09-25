@@ -1,0 +1,8 @@
+# Not web-accessible: this folder belongs to the application internals, not to the public site.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>
